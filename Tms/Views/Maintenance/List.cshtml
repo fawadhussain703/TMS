@@ -1,0 +1,144 @@
+﻿@model IEnumerable<Tms.Models.MaintenanceViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    .table-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px; /* Add space above the table */
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px; /* Add space above the table */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-add-vehicle {
+        float: right;
+        margin-bottom: 15px;
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-add-vehicle:hover {
+            background-color: #218838;
+        }
+
+    .modal-header {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+<div class="row align-items-center mb-3">
+    <div class="col-md-6">
+        <h2>Maintenance Details</h2>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="@Url.Action("List", "Maintenance")" class="btn btn-add-vehicle">Add Maintenance</a>
+        
+       
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="table-container">
+        <table id="maintainceTable" class="display table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 20%;">Vehicle Number</th>
+                <th style="width: 20%;">Make</th>
+                <th style="width: 20%;">Model</th>
+                <th style="width: 20%;">Year</th>
+                <th style="width: 20%;">Approval Status</th>
+                <th style="width: 20%;">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var vehicle in Model)
+            {
+                <tr>
+                    <td>@vehicle.VehicleNumber</td>
+                    <td>@vehicle.VehicleMake</td>
+                    <td>@vehicle.VehicleModel</td>
+                    <td>@vehicle.VehicleYear</td>
+                    <td>@vehicle.ApprovalStatus</td> 
+                    
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#maintainceTable').DataTable({
+                paging: false,
+                searching: true
+            });
+
+            $('#maintenanceForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '@Url.Action("AddMaintenance", "Maintenance")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert("Maintenance request submitted successfully.");
+                        $('#maintenanceModal').modal('hide');
+                    },
+                    error: function (xhr) {
+                        alert("An error occurred while submitting the maintenance request.");
+                    }
+                });
+            });
+        });
+
+        function openMaintenanceModal(vehicleId) {
+            $('#VehicleId').val(vehicleId);
+            $('#maintenanceModal').modal('show');
+        }
+    </script>
+}

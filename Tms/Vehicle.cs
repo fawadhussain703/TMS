@@ -15,13 +15,14 @@ namespace Tms
         }
 
         public int VehicleId { get; set; }
-
+        [Required(ErrorMessage = "Vehicle number is required.")]
         public string VehicleNumber { get; set; }
-
+        [Required(ErrorMessage = "Make is required.")]
         public string Make { get; set; }
-
+        [Required(ErrorMessage = "Model is required.")]
         public string Model { get; set; }
-
+        [Required(ErrorMessage = "Year is required.")]
+        [Range(1886, int.MaxValue, ErrorMessage = "Please enter a valid year.")]
         public int Year { get; set; }
 
         public DateTime CreatedDate { get; set; }

@@ -404,6 +404,7 @@
     <Compile Include="AspNetUserLogin.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="C__MigrationHistory.cs" />
@@ -415,6 +416,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MaintenanceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\VehicleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -478,7 +480,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -493,6 +494,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Vehicle\List.cshtml" />
+    <Content Include="Views\Vehicle\AddVehicle.cshtml" />
+    <Content Include="Views\Maintenance\List.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

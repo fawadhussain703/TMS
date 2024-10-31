@@ -4,37 +4,109 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Your Vehicles</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
 
-<table id="vehiclesTable" class="display table-bordered" style="width:100%">
-    <thead>
-        <tr>
-            <th>Vehicle Number</th>
-            <th>Make</th>
-            <th>Model</th>
-            <th>Year</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var vehicle in Model)
-        {
-            <tr>
-                <td>@vehicle.VehicleNumber</td>
-                <td>@vehicle.Make</td>
-                <td>@vehicle.Model</td>
-                <td>@vehicle.Year</td>
-                <td>
-                    <button class="btn btn-primary btn-sm"
-                            onclick="openMaintenanceModal(@vehicle.VehicleId)">
-                        Maintenance Request
-                    </button>
-                </td>
-            </tr>
+    h2 {
+        color: #333;
+    }
+
+    .table-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px; /* Add space above the table */
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px; /* Add space above the table */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-add-vehicle {
+        float: right;
+        margin-bottom: 15px;
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-add-vehicle:hover {
+            background-color: #218838;
         }
-    </tbody>
-</table>
 
+    .modal-header {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+<div class="row align-items-center mb-3">
+    <div class="col-md-6">
+        <h2>Your Vehicles</h2>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="@Url.Action("AddVehicle", "Vehicle")" class="btn btn-add-vehicle">Add Vehicle</a>
+    </div>
+</div>
+
+
+
+<div class="row">
+
+
+    <div class="table-container">
+        <table id="vehiclesTable" class="display table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Vehicle Number</th>
+                    <th style="width: 20%;">Make</th>
+                    <th style="width: 20%;">Model</th>
+                    <th style="width: 20%;">Year</th>
+                    <th style="width: 20%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vehicle in Model)
+                {
+                    <tr>
+                        <td>@vehicle.VehicleNumber</td>
+                        <td>@vehicle.Make</td>
+                        <td>@vehicle.Model</td>
+                        <td>@vehicle.Year</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="openMaintenanceModal(@vehicle.VehicleId)">
+                                Maintenance Request
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
 
 <div class="modal fade bd-example-modal-lg" id="maintenanceModal" tabindex="-1" role="dialog" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -71,13 +143,11 @@
     <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-        
             $('#vehiclesTable').DataTable({
-                paging: false,   
-                searching: true  
+                paging: false,
+                searching: true
             });
 
-    
             $('#maintenanceForm').on('submit', function (e) {
                 e.preventDefault();
 

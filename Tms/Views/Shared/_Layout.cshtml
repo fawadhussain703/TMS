@@ -3,26 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>TMS</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Transportation Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item" style="padding-left: 20%;margin-top: 5px">
+                        <button class="btn btn-success nav-link" onclick="location.href='@Url.Action("List", "Vehicle")'" style="padding: 5px; text-decoration: none; color: white">
+                            Vehicles
+                        </button>
+                    </li>
+                    
+                    <li class="nav-item" style="padding-left: 5px;margin-top: 5px">
+                        <button class="btn btn-success nav-link" onclick="location.href='@Url.Action("List", "Maintenance")'" style="padding: 5px; text-decoration: none; color: white">
+                            Maintenance
+                        </button>
+                    </li>
+                    @*<li class="nav-item">
+                            <button class="btn nav-button">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn nav-button">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</button>
+                        </li>*@
                 </ul>
-                 @Html.Partial("_LoginPartial")
+                <div class="nav-item">
+                    <button class="btn nav-button" title="Log out">
+                        <i class="fas fa-sign-out-alt"></i> 
+                    </button>
+                </div>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>

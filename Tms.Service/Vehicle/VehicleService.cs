@@ -7,15 +7,33 @@ using System.Linq;
 
 namespace Tms.Service.Vehicle
 {
-    public class VehicleService : IVehicleService 
+    public class VehicleService : BaseService
     {
-        BaseService bs = new BaseService();
-
+       
         public List<Vehicles> GetVehicles(string userId)
         {
-            var list = bs.Entity.Vehicles.Where(x => x.UserId == userId).ToList();
+            var list = Entity.Vehicles.Where(x => x.UserId == userId).ToList();
 
             return list;
+        }
+
+
+        public string SaveVehicles(Vehicles vehicle)
+        {
+
+            try
+            {
+                Entity.Vehicles.Add(vehicle);
+                Entity.SaveChanges();
+                return "Vehicle saved successfully!";
+            }
+            catch (Exception ex)
+            {
+               
+                return $"Error saving vehicle: {ex.Message}";
+            }
+
+
         }
 
     }
