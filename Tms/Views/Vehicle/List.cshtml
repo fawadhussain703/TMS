@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Tms.Models.VehicleViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your Vehicles</h2>
+
+<table id="vehiclesTable" class="display table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Vehicle Number</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vehicle in Model)
+        {
+            <tr>
+                <td>@vehicle.VehicleNumber</td>
+                <td>@vehicle.Make</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.Year</td>
+                <td>
+                    <button class="btn btn-primary btn-sm"
+                            onclick="openMaintenanceModal(@vehicle.VehicleId)">
+                        Maintenance Request
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="modal fade bd-example-modal-lg" id="maintenanceModal" tabindex="-1" role="dialog" aria-labelledby="maintenanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="maintenanceModalLabel">Maintenance Request</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="maintenanceForm" enctype="multipart/form-data">
+                    <input type="hidden" id="VehicleId" name="VehicleId" />
+                    <div class="form-group">
+                        <label for="MaintenanceType">Maintenance Type</label>
+                        <input type="text" class="form-control" id="MaintenanceType" name="MaintenanceType" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="Description">Description</label>
+                        <textarea class="form-control" id="Description" name="Description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="Document">Attach Document</label>
+                        <input type="file" class="form-control" id="Document" name="Document" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        
+            $('#vehiclesTable').DataTable({
+                paging: false,   
+                searching: true  
+            });
+
+    
+            $('#maintenanceForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '@Url.Action("AddMaintenance", "Maintenance")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert("Maintenance request submitted successfully.");
+                        $('#maintenanceModal').modal('hide');
+                    },
+                    error: function (xhr) {
+                        alert("An error occurred while submitting the maintenance request.");
+                    }
+                });
+            });
+        });
+
+        function openMaintenanceModal(vehicleId) {
+            $('#VehicleId').val(vehicleId);
+            $('#maintenanceModal').modal('show');
+        }
+    </script>
+}

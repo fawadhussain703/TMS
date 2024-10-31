@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Tms.Data.AppContext
 {
-    public partial class TMSContext : DbContext
+    public partial class TMSContext : DbContext 
     {
         public TMSContext()
         {

@@ -12,7 +12,7 @@ namespace Tms.Core
         public static string DB_SERVER = "51.38.41.235";
         public static string DB_NAME = "TMS";
         public static bool DB_Integrated_Security = false;
-        public static string DB_UID = "TMS";
+        public static string DB_UID = "DOTNET";
         public static string DB_PWD = "sql#@int123";
         #endregion
 

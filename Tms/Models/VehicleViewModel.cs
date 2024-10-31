@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
+using Tms.Data.AppContext;
 
-// Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
-// If you have enabled NRTs for your project, then un-comment the following line:
-// #nullable disable
-
-namespace Tms.Data.AppContext
+namespace Tms.Models
 {
-    public partial class Vehicles
+    public class VehicleViewModel
     {
-     
-        public Vehicles()
+        public VehicleViewModel()
         {
-            MaintenanceActivities = new HashSet<MaintenanceActivities>();
+            
         }
-
         public int VehicleId { get; set; }
         public string VehicleNumber { get; set; }
         public string Make { get; set; }
@@ -25,6 +21,7 @@ namespace Tms.Data.AppContext
 
         public string UserId { get; set; }
         public virtual AspNetUsers User { get; set; }
-        public virtual ICollection<MaintenanceActivities> MaintenanceActivities { get; set; }
+        
+
     }
 }
