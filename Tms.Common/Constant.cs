@@ -11,11 +11,11 @@ namespace Tms.Core
 
         #region Local
         public static string BASE_URL = "http://localhost:52852/";
-        public static string DB_SERVER = "51.38.41.235";
+        public static string DB_SERVER = "";
         public static string DB_NAME = "TMS";
         public static bool DB_Integrated_Security = false;
-        public static string DB_UID = "DOTNET";
-        public static string DB_PWD = "sql#@int123";
+        public static string DB_UID = "";
+        public static string DB_PWD = "";
         #endregion
 
         public static string GetEnumDescription(Enum value)
