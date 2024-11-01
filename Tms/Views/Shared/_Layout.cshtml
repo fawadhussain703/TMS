@@ -22,18 +22,29 @@
                             Vehicles
                         </button>
                     </li>
-                    
+
                     <li class="nav-item" style="padding-left: 5px;margin-top: 5px">
                         <button class="btn btn-success nav-link" onclick="location.href='@Url.Action("List", "Maintenance")'" style="padding: 5px; text-decoration: none; color: white">
                             Maintenance
                         </button>
                     </li>
-                    @*<li class="nav-item">
-                            <button class="btn nav-button">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</button>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item" style="padding-left: 5px;margin-top: 5px">
+                            <button class="btn btn-success nav-link" onclick="location.href='@Url.Action("List", "User")'" style="padding: 5px; text-decoration: none; color: white">
+                                Users
+                            </button>
                         </li>
-                        <li class="nav-item">
-                            <button class="btn nav-button">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</button>
-                        </li>*@
+                    }
+
+
+
+                    @*<li class="nav-item">
+            <button class="btn nav-button">@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</button>
+        </li>
+        <li class="nav-item">
+            <button class="btn nav-button">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</button>
+        </li>*@
                 </ul>
                 <div class="nav-item">
                     <button class="btn nav-button" title="Log out">

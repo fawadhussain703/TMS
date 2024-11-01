@@ -145,8 +145,12 @@
         $(document).ready(function () {
             $('#vehiclesTable').DataTable({
                 paging: false,
-                searching: true
+                searching: true,
+                language: {
+                    emptyTable: "<strong style='color: red;'>To create a maintenance request, please add a vehicle first.</strong>"
+                }
             });
+
 
             $('#maintenanceForm').on('submit', function (e) {
                 e.preventDefault();

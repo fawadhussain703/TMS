@@ -24,7 +24,7 @@ namespace Tms.Models
 
         public string VehicleDescription { get; set; }
 
-
+        public string CreatedBy { get; set; }
         public int VehicleYear { get; set; }
         public string DocumentURL { get; set; }
 

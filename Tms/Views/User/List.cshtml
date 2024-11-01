@@ -1,0 +1,157 @@
+﻿@model IEnumerable<Tms.Models.UserViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    .table-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px; /* Add space above the table */
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px; /* Add space above the table */
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-add-vehicle {
+        float: right;
+        margin-bottom: 15px;
+        background-color: #28a745;
+        color: white;
+    }
+
+        .btn-add-vehicle:hover {
+            background-color: #218838;
+        }
+
+    .modal-header {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
+<div class="row align-items-center mb-3">
+    <div class="col-md-6">
+        <h2>Users </h2>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="table-container">
+        <table id="maintainceTable" class="display table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">User Name</th>
+                    <th style="width: 20%;">Email Address</th>
+                    <th style="width: 20%;">Role</th>
+                    <th style="width: 20%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    if (user.RoleId != "1") 
+                    {
+                        <tr>
+                            <td>@user.UserName</td>
+                            <td>@user.Email</td>
+                            <td>
+                                @if (user.RoleId == "2")
+                                {
+                                    <p> Supervisor</p>
+                                }
+                                else
+                                {
+                                    <p> Requestor</p>
+                                }
+                            </td>
+                            <td>
+                                @if (user.RoleId == "2")
+                                {
+                                    <button class="btn btn-danger" onclick="removeSupervisor('@user.UserId')">Remove Supervisor</button>
+
+
+                                }
+                                else
+                                {
+                                    <button class="btn btn-success" onclick="makeSupervisor('@user.UserId')">Make Supervisor</button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+
+       
+        function makeSupervisor(userId) {
+            $.ajax({
+                url: '@Url.Action("MakeSupervisor", "User")',
+                type: 'POST',
+                data: { userId: userId },
+                success: function (response) {
+                    alert('Successfully Updated');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error making supervisor:', error);
+                }
+            });
+        }
+
+        
+        function removeSupervisor(userId) {
+            $.ajax({
+                url: '@Url.Action("RemoveSupervisor", "User")',
+                type: 'POST',
+                data: { userId: userId },
+                success: function (response) {
+                    alert('Successfully Updated');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error removing supervisor:', error);
+                }
+            });
+        }
+
+    </script>
+}

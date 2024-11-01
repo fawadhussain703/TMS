@@ -66,7 +66,7 @@
         <h2>Maintenance Details</h2>
     </div>
     <div class="col-md-6 text-right">
-        <a href="@Url.Action("List", "Maintenance")" class="btn btn-add-vehicle">Add Maintenance</a>
+        <a href="@Url.Action("List", "Vehicle")" class="btn btn-add-vehicle">Add Maintenance</a>
         
        
     </div>
@@ -78,27 +78,59 @@
     <div class="table-container">
         <table id="maintainceTable" class="display table-bordered">
             <thead>
-            <tr>
-                <th style="width: 20%;">Vehicle Number</th>
-                <th style="width: 20%;">Make</th>
-                <th style="width: 20%;">Model</th>
-                <th style="width: 20%;">Year</th>
-                <th style="width: 20%;">Approval Status</th>
-                <th style="width: 20%;">Action</th>
-            </tr>
+                <tr>
+                    <th style="width: 20%;">Vehicle Number</th>
+                    <th style="width: 20%;">Make</th>
+                    <th style="width: 20%;">Maintenance Type</th>
+                    <th style="width: 20%;">Description</th>
+                    <th style="width: 20%;">Approval Status</th>
+                    <th style="width: 20%;">Created By</th>
+                    <th style="width: 20%;">Document</th>
+                    <th style="width: 20%;">Action</th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var vehicle in Model)
-            {
-                <tr>
-                    <td>@vehicle.VehicleNumber</td>
-                    <td>@vehicle.VehicleMake</td>
-                    <td>@vehicle.VehicleModel</td>
-                    <td>@vehicle.VehicleYear</td>
-                    <td>@vehicle.ApprovalStatus</td> 
-                    
-                </tr>
-            }
+                @foreach (var vehicle in Model)
+                {
+                    <tr>
+                        <td>@vehicle.VehicleNumber</td>
+                        <td>@vehicle.VehicleMake</td>
+                        <td>@vehicle.MaintenanceType</td>
+                        <td>@vehicle.Description</td>
+                        <td>@vehicle.ApprovalStatus</td>
+                        <td>@vehicle.CreatedBy on @vehicle.CreatedDate</td>
+
+                        <td>
+                            @if (!string.IsNullOrEmpty(vehicle.DocumentURL))
+                            {
+                                <a href="@vehicle.DocumentURL" target="_blank">View Document</a>
+                            }
+                            else
+                            {
+                                <span>No Document</span>
+                            }
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Supervisor") && vehicle.ApprovalStatus == "Pending")
+                            {
+                                <button class="btn btn-success" onclick="approveRequest(@vehicle.VehicleId)">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectedRequest(@vehicle.VehicleId)">Reject</button>
+
+                            }
+else
+                {
+
+                        <span>No Action Required</span>
+                }
+
+
+                            @if (vehicle.ApprovalStatus == "Pending" && !User.IsInRole("Supervisor"))
+                            {
+                                <button class="btn btn-danger" onclick="deleteRequest(@vehicle.VehicleId)">Delete</button>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -135,7 +167,52 @@
                 });
             });
         });
+        function approveRequest(vehicleId) {
 
+            $.ajax({
+                url: '@Url.Action("ApproveRequest", "Maintenance")',
+                type: 'POST',
+                data: { vehicleId: vehicleId },
+                success: function (response) {
+                    alert('Request Approved');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error approving request:', error);
+                }
+            });
+        }
+
+
+        function rejectedRequest(vehicleId) {
+
+            $.ajax({
+                url: '@Url.Action("RejectedRequest", "Maintenance")',
+                type: 'POST',
+                data: { vehicleId: vehicleId },
+                success: function (response) {
+                    alert('Request rejected');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error rejected request:', error);
+                }
+            });
+}
+        function deleteRequest(vehicleId) {
+
+            $.ajax({
+                url:  '@Url.Action("DeleteRequest", "Maintenance")',
+                data: { vehicleId: vehicleId },
+                success: function (response) {
+                    alert('Request Deleted');
+                    location.reload();
+                },
+                error: function (error) {
+                    console.error('Error deleting request:', error);
+                }
+            });
+        }
         function openMaintenanceModal(vehicleId) {
             $('#VehicleId').val(vehicleId);
             $('#maintenanceModal').modal('show');
