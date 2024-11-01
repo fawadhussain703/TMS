@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Tms.Data.AppContext
 {
-    public partial class TMSContext : DbContext
+    public partial class TMSContext : DbContext 
     {
         public TMSContext()
         {
@@ -33,7 +33,7 @@ namespace Tms.Data.AppContext
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=51.38.41.235;User ID=DOTNET;Password=sql#@int123;Database=TMS;Trusted_Connection=False;");
+                optionsBuilder.UseSqlServer("Server=;User ID=;Password=;Database=TMS;Trusted_Connection=False;");
             }
         }
 

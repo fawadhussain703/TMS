@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -13,8 +14,8 @@ namespace Tms.Service.Common
         public BaseService()
         {
             var optionsBuilder = new DbContextOptionsBuilder<Tms.Data.AppContext.TMSContext>();
+           
 
-         
             if (Tms.Core.Constant.DB_Integrated_Security)
             {
                 optionsBuilder.UseSqlServer("data source=" + Tms.Core.Constant.DB_SERVER + ";initial catalog=" + Tms.Core.Constant.DB_NAME + ";integrated security=" + Tms.Core.Constant.DB_Integrated_Security + ";MultipleActiveResultSets=True;App=EntityFramework");

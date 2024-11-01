@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
@@ -34,7 +35,7 @@ namespace Tms
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -63,6 +64,19 @@ namespace Tms
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            app.Use(async (context, next) =>
+            {
+                var user = context.Authentication.User;
+                if (user.Identity.IsAuthenticated)
+                {
+                    // Here you can manage roles as needed
+                    var roles = await userManager.GetRolesAsync(user.Identity.GetUserId());
+                    context.Environment["owin.UserRoles"] = roles;
+                }
+                await next.Invoke();
+            });
         }
     }
 }

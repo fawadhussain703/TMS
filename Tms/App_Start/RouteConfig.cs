@@ -16,8 +16,14 @@ namespace Tms
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Vehicle", action = "List", id = UrlParameter.Optional }
             );
+
+            //routes.MapRoute(
+            //    name: "Vehicles",
+            //    url: "",
+            //    defaults: new { controller = "Vehicle", action = "List" }
+            //);
         }
     }
 }
